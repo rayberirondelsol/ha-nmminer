@@ -1,0 +1,52 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to NMMiner",
+        "description": "Enter the IP address of your NMMiner device. You can find it on the device display or in your router.",
+        "data": {
+          "host": "IP Address"
+        },
+        "data_description": {
+          "host": "e.g. 192.168.1.100 (without http:// or port)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to NMMiner. Check the IP address and make sure the device is online.",
+      "invalid_response": "Connected but received an invalid response. Is this an NMMiner device?",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This NMMiner device is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "hash_rate": { "name": "HashRate" },
+      "total_hash_rate": { "name": "Total HashRate" },
+      "active_workers": { "name": "Active Workers" },
+      "best_difficulty": { "name": "Best Difficulty" },
+      "shares": { "name": "Shares" },
+      "shares_accepted": { "name": "Shares Accepted" },
+      "shares_total": { "name": "Shares Total" },
+      "share_acceptance": { "name": "Share Acceptance" },
+      "pool": { "name": "Pool" },
+      "net_difficulty": { "name": "Net Difficulty" },
+      "pool_difficulty": { "name": "Pool Difficulty" },
+      "last_difficulty": { "name": "Last Difficulty" },
+      "best_diff_session": { "name": "Best Diff Session" },
+      "best_diff_alltime": { "name": "Best Diff All-Time" },
+      "hits": { "name": "Hits" },
+      "temperature": { "name": "Temperature" },
+      "rssi": { "name": "WiFi Signal" },
+      "free_memory": { "name": "Free Memory" },
+      "uptime_session": { "name": "Uptime Session" },
+      "uptime_total": { "name": "Uptime Total" },
+      "version": { "name": "Firmware" },
+      "board": { "name": "Board" },
+      "ip": { "name": "IP Address" },
+      "last_seen": { "name": "Last Seen" }
+    }
+  }
+}

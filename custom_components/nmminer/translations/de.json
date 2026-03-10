@@ -1,0 +1,52 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "NMMiner verbinden",
+        "description": "Gib die IP-Adresse deines NMMiner-Geräts ein. Du findest sie auf dem Display des Geräts oder in deinem Router.",
+        "data": {
+          "host": "IP-Adresse"
+        },
+        "data_description": {
+          "host": "z.B. 192.168.1.100 (ohne http:// oder Port)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum NMMiner fehlgeschlagen. Prüfe die IP-Adresse und stelle sicher, dass das Gerät online ist.",
+      "invalid_response": "Verbunden, aber ungültige Antwort erhalten. Ist dies ein NMMiner-Gerät?",
+      "unknown": "Ein unerwarteter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses NMMiner-Gerät ist bereits konfiguriert."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "hash_rate": { "name": "HashRate" },
+      "total_hash_rate": { "name": "Gesamt-HashRate" },
+      "active_workers": { "name": "Aktive Worker" },
+      "best_difficulty": { "name": "Beste Schwierigkeit" },
+      "shares": { "name": "Shares" },
+      "shares_accepted": { "name": "Akzeptierte Shares" },
+      "shares_total": { "name": "Shares Gesamt" },
+      "share_acceptance": { "name": "Akzeptanzrate" },
+      "pool": { "name": "Pool" },
+      "net_difficulty": { "name": "Netzwerk-Schwierigkeit" },
+      "pool_difficulty": { "name": "Pool-Schwierigkeit" },
+      "last_difficulty": { "name": "Letzte Schwierigkeit" },
+      "best_diff_session": { "name": "Beste Diff Sitzung" },
+      "best_diff_alltime": { "name": "Beste Diff Gesamt" },
+      "hits": { "name": "Treffer" },
+      "temperature": { "name": "Temperatur" },
+      "rssi": { "name": "WLAN-Signal" },
+      "free_memory": { "name": "Freier Speicher" },
+      "uptime_session": { "name": "Laufzeit Sitzung" },
+      "uptime_total": { "name": "Laufzeit Gesamt" },
+      "version": { "name": "Firmware" },
+      "board": { "name": "Board" },
+      "ip": { "name": "IP-Adresse" },
+      "last_seen": { "name": "Zuletzt gesehen" }
+    }
+  }
+}

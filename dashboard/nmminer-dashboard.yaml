@@ -1,0 +1,124 @@
+title: NMMiner
+views:
+  - title: NMMiner Monitor
+    path: nmminer
+    icon: mdi:pickaxe
+    cards:
+      - type: markdown
+        content: |
+          # ⛏️ NMMiner Monitor
+          <ha-alert alert-type="info">Bitcoin Solo Mining Dashboard</ha-alert>
+
+      - type: glance
+        title: Mining Overview
+        show_name: true
+        show_icon: true
+        show_state: true
+        columns: 4
+        entities:
+          - entity: sensor.nmminer_total_hashrate
+            name: HashRate
+            icon: mdi:lightning-bolt
+          - entity: sensor.nmminer_active_workers
+            name: Workers
+            icon: mdi:account-hard-hat
+          - entity: sensor.nmminer_best_difficulty
+            name: Best Diff
+            icon: mdi:trophy
+          - entity: sensor.nmminer_hits
+            name: Hits
+            icon: mdi:star-circle
+
+      - type: history-graph
+        title: HashRate History (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.nmminer_hashrate
+            name: HashRate
+
+      - type: horizontal-stack
+        cards:
+          - type: history-graph
+            title: Share Acceptance
+            hours_to_show: 24
+            entities:
+              - entity: sensor.nmminer_share_acceptance
+                name: Acceptance
+          - type: history-graph
+            title: WiFi Signal
+            hours_to_show: 24
+            entities:
+              - entity: sensor.nmminer_rssi
+                name: RSSI
+
+      - type: glance
+        title: Pool & Shares
+        show_name: true
+        show_icon: true
+        columns: 3
+        entities:
+          - entity: sensor.nmminer_shares
+            name: Shares
+            icon: mdi:share-variant
+          - entity: sensor.nmminer_pool
+            name: Pool
+            icon: mdi:server-network
+          - entity: sensor.nmminer_net_difficulty
+            name: Net Diff
+            icon: mdi:target
+
+      - type: entities
+        title: Difficulty
+        show_header_toggle: false
+        entities:
+          - entity: sensor.nmminer_best_diff_session
+            name: Best Diff (Session)
+            icon: mdi:trophy-outline
+          - entity: sensor.nmminer_best_diff_alltime
+            name: Best Diff (All-Time)
+            icon: mdi:trophy
+          - entity: sensor.nmminer_pool_difficulty
+            name: Pool Difficulty
+            icon: mdi:target-variant
+          - entity: sensor.nmminer_last_difficulty
+            name: Last Difficulty
+            icon: mdi:target-account
+
+      - type: entities
+        title: Device Information
+        show_header_toggle: false
+        entities:
+          - entity: sensor.nmminer_board
+            name: Board
+            icon: mdi:circuit-board
+          - entity: sensor.nmminer_version
+            name: Firmware
+            icon: mdi:information-outline
+          - entity: sensor.nmminer_uptime_session
+            name: Uptime (Session)
+            icon: mdi:clock-outline
+          - entity: sensor.nmminer_uptime_total
+            name: Uptime (Total)
+            icon: mdi:clock-check-outline
+          - entity: sensor.nmminer_free_memory
+            name: Free Memory
+            icon: mdi:memory
+          - entity: sensor.nmminer_temperature
+            name: Temperature
+            icon: mdi:thermometer
+
+      - type: glance
+        title: Network
+        show_name: true
+        show_icon: true
+        columns: 3
+        entities:
+          - entity: sensor.nmminer_ip
+            name: Miner IP
+            icon: mdi:ip-network
+          - entity: sensor.nmminer_rssi
+            name: WiFi Signal
+            icon: mdi:wifi
+          - entity: sensor.nmminer_last_seen
+            name: Last Seen
+            icon: mdi:eye-check
