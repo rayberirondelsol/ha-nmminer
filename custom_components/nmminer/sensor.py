@@ -54,28 +54,25 @@ def _parse_shares(data: dict) -> str | None:
     return _get_device(data).get("share")
 
 
+def _share_counts(data: dict) -> tuple[int, int] | None:
+    """Return (rejected, total) from the "rejected/total/acceptance%" share string."""
+    try:
+        rejected, total = _get_device(data).get("share", "").split("/")[:2]
+        return int(rejected), int(total)
+    except ValueError:
+        return None
+
+
 def _parse_share_accepted(data: dict) -> int | None:
-    """Extract accepted shares count."""
-    share = _get_device(data).get("share", "")
-    parts = share.split("/")
-    if len(parts) >= 1:
-        try:
-            return int(parts[0])
-        except (ValueError, IndexError):
-            pass
-    return None
+    """Accepted shares = total - rejected."""
+    counts = _share_counts(data)
+    return counts[1] - counts[0] if counts else None
 
 
-def _parse_share_rejected(data: dict) -> int | None:
-    """Extract total shares count."""
-    share = _get_device(data).get("share", "")
-    parts = share.split("/")
-    if len(parts) >= 2:
-        try:
-            return int(parts[1])
-        except (ValueError, IndexError):
-            pass
-    return None
+def _parse_share_total(data: dict) -> int | None:
+    """Total shares submitted."""
+    counts = _share_counts(data)
+    return counts[1] if counts else None
 
 
 def _parse_share_acceptance(data: dict) -> float | None:
@@ -269,7 +266,7 @@ SENSOR_DESCRIPTIONS: tuple[NMMinerSensorEntityDescription, ...] = (
         name="Shares Total",
         icon="mdi:counter",
         state_class=SensorStateClass.TOTAL_INCREASING,
-        value_fn=_parse_share_rejected,
+        value_fn=_parse_share_total,
     ),
     NMMinerSensorEntityDescription(
         key="share_acceptance",
