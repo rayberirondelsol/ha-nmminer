@@ -468,3 +468,26 @@ class NMMinerSensor(CoordinatorEntity[NMMinerCoordinator], SensorEntity):
         if self.coordinator.data is None:
             return None
         return self.entity_description.value_fn(self.coordinator.data)
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return extra attributes for the hashrate sensor (used by Garmin widget)."""
+        if self.entity_description.key != "hash_rate":
+            return None
+        if self.coordinator.data is None:
+            return None
+        data = self.coordinator.data
+        return {
+            "best_diff": _parse_best_diff_summary(data),
+            "best_diff_session": _parse_best_diff_session(data),
+            "best_diff_alltime": _parse_best_diff_alltime(data),
+            "shares_accepted": _parse_share_accepted(data),
+            "shares_total": _parse_share_rejected(data),
+            "share_acceptance": _parse_share_acceptance(data),
+            "hits": _parse_valid(data),
+            "rssi": _parse_rssi(data),
+            "temperature": _parse_temp(data),
+            "uptime_session": _parse_uptime_session(data),
+            "active_workers": _parse_total_workers(data),
+            "total_hash_rate": _parse_total_hash_rate(data),
+        }

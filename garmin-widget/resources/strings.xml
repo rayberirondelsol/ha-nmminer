@@ -1,0 +1,7 @@
+<strings>
+    <string id="AppName">NMMiner</string>
+    <string id="SettingHaUrl">Home Assistant URL</string>
+    <string id="SettingHaUrlPrompt">z.B. https://myha.duckdns.org:8123</string>
+    <string id="SettingHaToken">HA Access Token</string>
+    <string id="SettingHaTokenPrompt">Long-Lived Access Token</string>
+</strings>

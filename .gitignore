@@ -8,3 +8,12 @@ build/
 .venv/
 venv/
 .env
+
+# Garmin Connect IQ: Signaturschluessel, Build-Artefakte, generierte Settings (enthalten den HA-Token)
+garmin-widget/developer_key.*
+garmin-widget/*.prg
+garmin-widget/*.prg.debug.xml
+garmin-widget/gen/
+garmin-widget/internal-mir/
+garmin-widget/mir/
+garmin-widget/NMMiner-settings.json

@@ -1,0 +1,4 @@
+<properties>
+    <property id="haUrl" type="string">https://assi.ngrok.io</property>
+    <property id="haToken" type="string"></property>
+</properties>

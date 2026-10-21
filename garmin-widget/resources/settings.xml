@@ -1,0 +1,8 @@
+<settings>
+    <setting propertyKey="@Properties.haUrl" title="@Strings.SettingHaUrl">
+        <settingConfig type="alphaNumeric"/>
+    </setting>
+    <setting propertyKey="@Properties.haToken" title="@Strings.SettingHaToken">
+        <settingConfig type="alphaNumeric"/>
+    </setting>
+</settings>
