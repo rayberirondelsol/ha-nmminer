@@ -479,7 +479,7 @@ class NMMinerSensor(CoordinatorEntity[NMMinerCoordinator], SensorEntity):
             "best_diff_session": _parse_best_diff_session(data),
             "best_diff_alltime": _parse_best_diff_alltime(data),
             "shares_accepted": _parse_share_accepted(data),
-            "shares_total": _parse_share_rejected(data),
+            "shares_total": _parse_share_total(data),
             "share_acceptance": _parse_share_acceptance(data),
             "hits": _parse_valid(data),
             "rssi": _parse_rssi(data),
