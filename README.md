@@ -91,15 +91,26 @@ lovelace:
 
 ## How it works
 
-The integration polls the NMMiner `/swarm` JSON API endpoint every 30 seconds. This is the same API the device's built-in web dashboard (`/static`) uses.
+The integration polls the miner every 30 seconds:
+
+- **Firmware 2.x:** `GET /api/system/info`
+- **Firmware 1.x:** `GET /swarm` (the API behind the built-in `/static` dashboard)
+
+It tries `/api/system/info` first and falls back to `/swarm`. The 2.x response is translated into the 1.x format, so the same sensors are created for both. Values that 2.x does not provide show as `unknown`.
+
+> **2.x support is built from the official firmware API docs and has not yet been verified on real 2.x hardware.** If a sensor looks wrong, please open an issue and include the output of `http://<miner-ip>/api/system/info`.
 
 **Required network access:** Your Home Assistant instance must be able to reach the NMMiner device on your local network via HTTP (port 80).
 
 ## Compatibility
 
 - **Home Assistant:** 2024.1+
-- **NMMiner firmware:** Tested with v1.8.x
-- **NMMiner models:** Any model with the `/swarm` API endpoint (ESP32-based miners)
+- **NMMiner firmware:** 1.8.x (tested on v1.8.28), 2.x (experimental, see above)
+- **NMMiner models:** Any ESP32-based miner with the `/swarm` (1.x) or `/api/system/info` (2.x) endpoint
+
+## Development
+
+`py -m pip install pytest && py -m pytest` runs the endpoint-mapping tests (no Home Assistant needed).
 
 ## License
 
