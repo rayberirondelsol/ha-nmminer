@@ -11,7 +11,8 @@ import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_HOST
 
-from .const import DOMAIN, SWARM_ENDPOINT
+from .const import DOMAIN
+from .mapping import fetch
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -49,28 +50,19 @@ class NMMinerConfigFlow(ConfigFlow, domain=DOMAIN):
             await self.async_set_unique_id(host)
             self._abort_if_unique_id_configured()
 
-            # Test connection
-            url = f"http://{host}{SWARM_ENDPOINT}"
+            # Test connection (works with firmware 1.x and 2.x)
             try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
-                        if resp.status != 200:
-                            errors["base"] = "cannot_connect"
-                        else:
-                            data = await resp.json(content_type=None)
-                            if "devices" not in data:
-                                errors["base"] = "invalid_response"
-                            else:
-                                # Determine a nice title
-                                device = data["devices"][0]
-                                board = device.get("boardType", "NMMiner")
-                                title = f"NMMiner ({board})"
-                                return self.async_create_entry(
-                                    title=title,
-                                    data={CONF_HOST: host},
-                                )
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                    data = await fetch(session, host)
+                board = data["devices"][0].get("boardType", "NMMiner")
+                return self.async_create_entry(
+                    title=f"NMMiner ({board})",
+                    data={CONF_HOST: host},
+                )
             except aiohttp.ClientError:
                 errors["base"] = "cannot_connect"
+            except ValueError:
+                errors["base"] = "invalid_response"
             except Exception:
                 _LOGGER.exception("Unexpected exception")
                 errors["base"] = "unknown"

@@ -11,7 +11,8 @@ import aiohttp
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DEFAULT_SCAN_INTERVAL, SWARM_ENDPOINT
+from .const import DEFAULT_SCAN_INTERVAL
+from .mapping import fetch
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,7 +23,6 @@ class NMMinerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def __init__(self, hass: HomeAssistant, host: str) -> None:
         """Initialize the coordinator."""
         self.host = host
-        self._url = f"http://{host}{SWARM_ENDPOINT}"
         super().__init__(
             hass,
             _LOGGER,
@@ -31,19 +31,11 @@ class NMMinerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         )
 
     async def _async_update_data(self) -> dict[str, Any]:
-        """Fetch data from the NMMiner /swarm endpoint."""
+        """Fetch data (firmware 2.x /api/system/info or 1.x /swarm), 1.x-shaped."""
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(self._url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
-                    if resp.status != 200:
-                        raise UpdateFailed(f"HTTP {resp.status} from {self._url}")
-                    data = await resp.json(content_type=None)
-        except aiohttp.ClientError as err:
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                return await fetch(session, self.host)
+        except (aiohttp.ClientError, ValueError) as err:
             raise UpdateFailed(f"Error communicating with NMMiner at {self.host}: {err}") from err
         except Exception as err:
             raise UpdateFailed(f"Unexpected error: {err}") from err
-
-        if "devices" not in data or not data["devices"]:
-            raise UpdateFailed("No devices found in NMMiner response")
-
-        return data
